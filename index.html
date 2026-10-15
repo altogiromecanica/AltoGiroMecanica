@@ -2,41 +2,63 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Alto Giro Mecânica | Multimarcas Leve e Pesada - Carazinho RS</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Alto Giro - Carazinho</title>
 <style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:Inter, Arial, sans-serif}
+*{margin:0;padding:0;box-sizing:border-box;font-family:Arial}
 body{background:#0f0f0f;color:#fff}
-header{background:#111;display:flex;justify-content:space-between;align-items:center;padding:15px 5%;position:sticky;top:0;z-index:10;border-bottom:2px solid #ffcc00}
-.logo{font-weight:900;font-size:22px;color:#ffcc00} .logo span{color:#fff}
+header{background:#111;display:flex;justify-content:space-between;padding:15px 5%;border-bottom:2px solid #ffcc00}
+.logo{font-weight:900;color:#ffcc00;font-size:22px}.logo span{color:#fff}
 .btn-zap{background:#25d366;color:#fff;padding:10px 18px;border-radius:8px;text-decoration:none;font-weight:700}
-.hero{padding:60px 5%;background:linear-gradient(90deg,#000 60%,#222);display:grid;grid-template-columns:1.2fr .8fr;gap:20px}
-.hero h1{font-size:42px;line-height:1.1} .hero h1 b{color:#ffcc00}
-.hero p{margin:15px 0;color:#ccc}
-.badge{display:inline-block;background:#ffcc00;color:#000;padding:6px 12px;border-radius:20px;font-weight:800;margin:5px 5px 0 0;font-size:12px}
-.grid-produtos{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:16px;padding:30px 5%}
-.card{background:#1a1a1a;border-radius:12px;padding:16px;border:1px solid #2a2a2a}
-.card img{width:100%;height:150px;object-fit:cover;border-radius:8px;background:#333}
-.card h3{margin:10px 0 5px;font-size:16px} .price{color:#ffcc00;font-weight:900;font-size:18px}
-.card button{width:100%;margin-top:10px;background:#ffcc00;border:0;padding:10px;border-radius:8px;font-weight:800;cursor:pointer}
-.carrinho{position:fixed;right:-400px;top:0;width:380px;height:100%;background:#fff;color:#000;transition:.3s;z-index:20;padding:20px;overflow:auto}
-.carrinho.open{right:0}
-.carrinho-item{display:flex;justify-content:space-between;margin:10px 0;border-bottom:1px solid #eee;padding-bottom:8px}
+.hero{padding:40px 5%;background:#000}
+.grid-produtos{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:15px;padding:20px 5%}
+.card{background:#1a1a1a;padding:15px;border-radius:10px;border:1px solid #333}
+.price{color:#ffcc00;font-weight:900}
+.card button{width:100%;margin-top:10px;background:#ffcc00;border:0;padding:10px;border-radius:6px;font-weight:800}
+.carrinho{position:fixed;right:0;top:0;width:360px;height:100%;background:#fff;color:#000;padding:20px;transform:translateX(100%);transition:.3s;z-index:99}
+.carrinho.open{transform:translateX(0)}
 .total{font-weight:900;font-size:20px;margin:15px 0}
-.btn{width:100%;padding:14px;border-radius:10px;border:0;font-weight:900;margin-top:8px;cursor:pointer}
-.btn-pix{background:#000;color:#ffcc00} .btn-wpp{background:#25d366;color:#fff}
-.servicos{padding:30px 5%;display:grid;grid-template-columns:1fr 1fr;gap:20px}
-.box{background:#1a1a1a;padding:20px;border-radius:12px;border-left:4px solid #ffcc00}
-.mapa{padding:30px 5%;background:#111} .mapa iframe{width:100%;height:350px;border:0;border-radius:12px}
+.btn{width:100%;padding:12px;border-radius:8px;border:0;font-weight:900;margin-top:8px}
+.btn-wpp{background:#25d366;color:#fff}.btn-pix{background:#000;color:#ffcc00}
+.mapa iframe{width:100%;height:300px;border:0;border-radius:10px}
+.mapa{padding:20px 5%;background:#111}
 </style>
 </head>
 <body>
-<header>
-<div class="logo">ALTO GIRO <span>MECÂNICA</span></div>
-<a class="btn-zap" href="https://wa.me/5554996789733" target="_blank">WhatsApp 24h</a>
-</header>
-
-<section class="hero">
-<div>
-<div><span class="badge">LINHA LEVE</span><span class="badge">LINHA PESADA</span><span class="badge">SOCORRO 24H</span></div>
-<h1>Multimarcas <b>Leve
+<header><div class="logo">ALTO GIRO <span>MECÂNICA</span></div><a class="btn-zap" href="https://wa.me/5554996789733">WhatsApp</a></header>
+<div class="hero">
+<h1>MANUTENÇÃO COMPLETA Leve e Pesada em Carazinho</h1>
+<p>Av. Flores da Cunha, 5191 - Fey - 54 99678-9733</p>
+<button onclick="toggle()" class="btn-zap" style="background:#ffcc00;color:#000;margin-top:15px">🛒 Ver Carrinho (<span id="qtd">0</span>)</button>
+</div>
+<h2 style="padding:20px 5% 0">Loja de Peças</h2>
+<div class="grid-produtos" id="produtos"></div>
+<div class="carrinho" id="carrinho">
+<h2>Carrinho</h2><div id="lista"></div>
+<div class="total">Total R$ <span id="total">0</span></div>
+<button class="btn btn-wpp" onclick="wpp()">Finalizar no WhatsApp</button>
+<button class="btn btn-pix" onclick="pix()">Pagar Pix 54 99678-9733</button>
+<div id="pixArea" style="display:none;margin-top:10px;background:#eee;padding:10px;border-radius:6px"><small id="pixCod"></small></div>
+<button onclick="toggle()" style="margin-top:10px">Fechar</button>
+</div>
+<div class="mapa"><h3>Onde estamos</h3><br><iframe src="https://www.google.com/maps?q=Av.+Flores+da+Cunha,+5191+Carazinho&output=embed"></iframe></div>
+<script>
+const produtos=[
+{nome:"Óleo Diesel 15W40 20L",preco:320},
+{nome:"Filtro Óleo",preco:65},
+{nome:"Bateria 60Ah",preco:389},
+{nome:"Bateria 150Ah",preco:890},
+{nome:"Pastilha Freio",preco:120},
+{nome:"Revisão Completa",preco:199}
+];
+let car=[];
+function render(){document.getElementById('produtos').innerHTML=produtos.map((p,i)=>`<div class=card><h3>${p.nome}</h3><div class=price>R$ ${p.preco}</div><button onclick=add(${i})>Adicionar</button></div>`).join('')}
+function add(i){car.push(produtos[i]);upd()}
+function upd(){document.getElementById('qtd').innerText=car.length;document.getElementById('total').innerText=car.reduce((s,p)=>s+p.preco,0);document.getElementById('lista').innerHTML=car.map(p=>`<div style=display:flex;justify-content:space-between;margin:8px 0><span>${p.nome}</span><b>R$ ${p.preco}</b></div>`).join('')}
+function toggle(){document.getElementById('carrinho').classList.toggle('open')}
+function wpp(){let t=document.getElementById('total').innerText;let itens=car.map(p=>`- ${p.nome}`).join('%0A');window.open(`https://wa.me/5554996789733?text=Olá Alto Giro! Pedido:%0A${itens}%0ATotal R$ ${t}`)}
+function pix(){document.getElementById('pixArea').style.display='block';document.getElementById('pixCod').innerText=`Chave Pix: 54 99678-9733 - Valor R$ ${document.getElementById('total').innerText}`}
+render();
+</script>
+</body>
+</html>
